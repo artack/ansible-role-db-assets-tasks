@@ -7,6 +7,8 @@ dat_allowed_tasks:
   - app:pull
   - app:push
 
+dat_disallow_pushing: false
+
 dat_temp_dir: /tmp
 
 # To specify the temp directory where the dump is saved

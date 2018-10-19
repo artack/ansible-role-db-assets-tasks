@@ -50,7 +50,7 @@ dat_db_remote_clean: true
 dat_db_temp_dir: /tmp/.db
 
 # To disallow any push to the remote (maybe productive) server
-dat_disallow_pushing: true // NOT yet supported
+dat_disallow_pushing: false
 
 # To specify the local & remote dirs to be synced - ATTENTION: Must end with a directory separator (/)
 dat_assets_dir: []

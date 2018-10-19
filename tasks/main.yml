@@ -5,6 +5,12 @@
     msg: "'{{ dat_action }}' not a valid action"
   when: dat_action not in dat_allowed_tasks
 
+- name: DAT | checking to be allowed to push
+  delegate_to: 127.0.0.1
+  fail:
+    msg: "you are not allowed to push. check variable 'dat_disallow_pushing'"
+  when: dat_disallow_pushing and (dat_action == 'db:push' or dat_action == 'assets:push' or dat_action == 'app:push')
+
 - set_fact:
     timestamp: "{{ lookup('pipe','date +%Y%m%d%H%M') }}"
 
