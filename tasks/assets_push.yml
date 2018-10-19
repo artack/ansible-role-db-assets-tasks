@@ -23,6 +23,7 @@
     archive: no
     delete: "{{ dat_assets_remote_delete }}"
     recursive: yes
+    checksum: yes
   with_items: "{{ dat_assets_dir }}"
   loop_control:
     index_var: idx
