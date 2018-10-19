@@ -31,7 +31,7 @@ dat_local   ansible_host=192.168.0.100              ansible_user=vagrant        
 
   vars_prompt:
     - name: dat_action
-      prompt: "Enter an action to perform"
+      prompt: "Enter an action to perform ({{ dat_allowed_tasks|join(' | ') }})"
       private: no
 
   roles:
