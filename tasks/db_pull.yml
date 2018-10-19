@@ -1,0 +1,40 @@
+---
+- name: DAT | Create remote db dump
+  mysql_db:
+    name: xmas-web
+    target: "{{ dat_db_remote_dump_file }}"
+    state: dump
+  when: inventory_hostname == 'dat_remote'
+
+- name: DAT | Copy remote db dump to controller
+  synchronize:
+    src: "{{ dat_db_remote_dump_file }}"
+    dest: "{{ dat_db_controller_dump_dir }}"
+    mode: pull
+  when: inventory_hostname == 'dat_remote'
+
+- name: DAT | Cleanup remote db dump
+  file:
+    path: "{{ dat_db_remote_dump_file }}"
+    state: absent
+  when: inventory_hostname == 'dat_remote' and dat_db_remote_clean
+
+- name: DAT | Copy controller db dump to local
+  synchronize:
+    src: "{{ dat_db_controller_dump_dir }}"
+    dest: "{{ dat_db_local_dump_file }}"
+    mode: push
+  when: inventory_hostname == 'dat_local'
+
+- name: DAT | Import db dump to local
+  mysql_db:
+    name: xmas-web
+    target: "{{ dat_db_local_dump_file }}"
+    state: import
+  when: inventory_hostname == 'dat_local'
+
+- name: DAT | Cleanup local db dump
+  file:
+    path: "{{ dat_db_local_dump_file }}"
+    state: absent
+  when: inventory_hostname == 'dat_local' and dat_db_local_clean

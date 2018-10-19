@@ -1,0 +1,5 @@
+---
+- name: DAT | Ensure the tmp directory exists
+  file:
+    path: "{{ dat_db_local_dump_dir }}"
+    state: directory

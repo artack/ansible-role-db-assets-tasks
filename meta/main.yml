@@ -1,0 +1,25 @@
+---
+galaxy_info:
+  role_name: db-assets-tasks
+  author: Patrick Landolt
+  description: Project based db and assets tasks (pull, push & sync)
+  company: ARTACK WebLab GmbH
+  license: MIT
+  min_ansible_version: 2.4
+  platforms:
+    - name: GenericUNIX
+      versions:
+      - any
+  galaxy_tags:
+    - task
+    - tasks
+    - sync
+    - db
+    - database
+    - mysql
+    - mariadb
+    - files
+    - assets
+    - asset
+    - synchronisation
+    - synchronization

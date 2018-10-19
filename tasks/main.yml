@@ -1,0 +1,22 @@
+---
+- name: DAT | checking the input action
+  delegate_to: 127.0.0.1
+  fail:
+    msg: "'{{ dat_action }}' not a valid action"
+  when: dat_action not in dat_allowed_tasks
+
+- set_fact:
+    timestamp: "{{ lookup('pipe','date +%Y%m%d%H%M') }}"
+
+- set_fact:
+    dat_db_local_dump_file: "{{ dat_db_local_dump_dir }}/mysql_{{ timestamp }}.sql.gz"
+    dat_db_remote_dump_file: "{{ dat_db_remote_dump_dir }}/mysql_{{ timestamp }}.sql.gz"
+
+- include_tasks: db.yml
+  when: dat_action == 'db:pull' or dat_action == 'db:push'
+
+- include_tasks: db_pull.yml
+  when: dat_action == 'db:pull'
+
+- include_tasks: db_push.yml
+  when: dat_action == 'db:push'

@@ -1,0 +1,22 @@
+---
+dat_allowed_tasks:
+  - db:pull
+  - db:push
+
+# To specify the temp directory where the dump is saved
+dat_db_dump_dir: /tmp/.db
+
+# To specify the controller temp directory where the dump is saved
+dat_db_controller_dump_dir: "{{ dat_db_dump_dir }}"
+
+# To specify the local temp directory where the dump is saved
+dat_db_local_dump_dir: "{{ dat_db_dump_dir }}"
+
+# To specify the remote temp directory where the dump is saved
+dat_db_remote_dump_dir: "{{ dat_db_dump_dir }}"
+
+# To remove the local dump after using
+dat_db_local_clean: true
+
+# To remove the remote dump after using
+dat_db_remote_clean: true
