@@ -1,5 +1,24 @@
 ---
-- name: DAT | Ensure the tmp directory exists
+- set_fact:
+    dat_db_local_temp_file: "{{ dat_db_local_temp_dir }}/mysql_{{ timestamp }}.sql.gz"
+    dat_db_remote_temp_file: "{{ dat_db_remote_temp_dir }}/mysql_{{ timestamp }}.sql.gz"
+    dat_db_controller_temp_file: "{{ dat_db_controller_temp_dir }}/mysql_{{ timestamp }}.sql.gz"
+
+- name: DAT | DB | Ensure the tmp directory on local exists
   file:
-    path: "{{ dat_db_local_dump_dir }}"
+    path: "{{ dat_db_local_temp_dir }}"
     state: directory
+  when: inventory_hostname == 'dat_local'
+
+- name: DAT | DB | Ensure the tmp directory on remote exists
+  file:
+    path: "{{ dat_db_remote_temp_dir }}"
+    state: directory
+  when: inventory_hostname == 'dat_remote'
+
+- name: DAT | DB | Ensure the tmp directory on controller exists
+  delegate_to: 127.0.0.1
+  file:
+    path: "{{ dat_db_controller_temp_dir }}"
+    state: directory
+  when: inventory_hostname == 'dat_local'

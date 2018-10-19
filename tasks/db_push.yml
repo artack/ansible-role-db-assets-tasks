@@ -1,40 +1,40 @@
 ---
-- name: DAT | Create local db dump
+- name: DAT | DB - PUSH | Create local db dump
   mysql_db:
-    name: xmas-web
-    target: "{{ dat_db_local_dump_file }}"
+    name: "{{ dat_db_name }}"
+    target: "{{ dat_db_local_temp_file }}"
     state: dump
   when: inventory_hostname == 'dat_local'
 
-- name: DAT | Copy local db dump to controller
+- name: DAT | DB - PUSH | Copy local db dump to controller
   synchronize:
-    src: "{{ dat_db_local_dump_file }}"
-    dest: "{{ dat_db_controller_dump_dir }}"
+    src: "{{ dat_db_local_temp_file }}"
+    dest: "{{ dat_db_controller_temp_file }}"
     mode: pull
   when: inventory_hostname == 'dat_local'
 
-- name: DAT | Cleanup local db dump
+- name: DAT | DB - PUSH | Cleanup local db dump
   file:
-    path: "{{ dat_db_local_dump_file }}"
+    path: "{{ dat_db_local_temp_file }}"
     state: absent
   when: inventory_hostname == 'dat_local' and dat_db_local_clean
 
-- name: DAT | Copy controller db dump to remote
+- name: DAT | DB - PUSH | Copy controller db dump to remote
   synchronize:
-    src: "{{ dat_db_controller_dump_dir }}"
-    dest: "{{ dat_db_remote_dump_file }}"
+    src: "{{ dat_db_controller_temp_file }}"
+    dest: "{{ dat_db_remote_temp_file }}"
     mode: push
   when: inventory_hostname == 'dat_remote'
 
-- name: DAT | Import db dump to remote
+- name: DAT | DB - PUSH | Import db dump to remote
   mysql_db:
-    name: xmas-web
-    target: "{{ dat_db_remote_dump_file }}"
+    name: "{{ dat_db_name }}"
+    target: "{{ dat_db_remote_temp_file }}"
     state: import
   when: inventory_hostname == 'dat_remote'
 
-- name: DAT | Cleanup remote db dump
+- name: DAT | DB - PUSH | Cleanup remote db dump
   file:
-    path: "{{ dat_db_remote_dump_file }}"
+    path: "{{ dat_db_remote_temp_file }}"
     state: absent
   when: inventory_hostname == 'dat_remote' and dat_db_remote_clean

@@ -1,0 +1,10 @@
+---
+- name: DAT | ASSETS | clean
+  delegate_to: 127.0.0.1
+  file:
+    path: "{{ dat_assets_controller_temp_dir }}/{{ idx }}/"
+    state: absent
+  with_items: "{{ dat_assets_dir }}"
+  loop_control:
+    index_var: idx
+  when: inventory_hostname == 'dat_local' and dat_assets_clean

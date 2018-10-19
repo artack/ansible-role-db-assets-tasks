@@ -2,21 +2,38 @@
 dat_allowed_tasks:
   - db:pull
   - db:push
+  - assets:pull
+  - assets:push
+  - app:pull
+  - app:push
+
+dat_temp_dir: /tmp
 
 # To specify the temp directory where the dump is saved
-dat_db_dump_dir: /tmp/.db
+dat_db_temp_dir: "{{ dat_temp_dir }}/.db"
 
 # To specify the controller temp directory where the dump is saved
-dat_db_controller_dump_dir: "{{ dat_db_dump_dir }}"
+dat_db_controller_temp_dir: "{{ dat_db_temp_dir }}"
 
 # To specify the local temp directory where the dump is saved
-dat_db_local_dump_dir: "{{ dat_db_dump_dir }}"
+dat_db_local_temp_dir: "{{ dat_db_temp_dir }}"
 
 # To specify the remote temp directory where the dump is saved
-dat_db_remote_dump_dir: "{{ dat_db_dump_dir }}"
+dat_db_remote_temp_dir: "{{ dat_db_temp_dir }}"
 
 # To remove the local dump after using
 dat_db_local_clean: true
 
 # To remove the remote dump after using
 dat_db_remote_clean: true
+
+# To remove the assets on the controller after using
+dat_assets_clean: false
+
+dat_assets_remote_delete: false
+dat_assets_local_delete: true
+
+dat_assets_temp_dir: "{{ dat_temp_dir }}/.assets"
+dat_assets_controller_temp_dir: "{{ dat_assets_temp_dir }}"
+dat_assets_local_temp_dir: "{{ dat_assets_temp_dir }}"
+dat_assets_remote_temp_dir: "{{ dat_assets_temp_dir }}"

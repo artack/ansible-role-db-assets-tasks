@@ -8,15 +8,20 @@
 - set_fact:
     timestamp: "{{ lookup('pipe','date +%Y%m%d%H%M') }}"
 
-- set_fact:
-    dat_db_local_dump_file: "{{ dat_db_local_dump_dir }}/mysql_{{ timestamp }}.sql.gz"
-    dat_db_remote_dump_file: "{{ dat_db_remote_dump_dir }}/mysql_{{ timestamp }}.sql.gz"
-
 - include_tasks: db.yml
-  when: dat_action == 'db:pull' or dat_action == 'db:push'
+  when: dat_action == 'db:pull' or dat_action == 'db:push' or dat_action == 'app:pull' or dat_action == 'app:push'
 
 - include_tasks: db_pull.yml
-  when: dat_action == 'db:pull'
+  when: dat_action == 'db:pull' or dat_action == 'app:pull'
 
 - include_tasks: db_push.yml
-  when: dat_action == 'db:push'
+  when: dat_action == 'db:push' or dat_action == 'app:push'
+
+- include_tasks: assets.yml
+  when: dat_action == 'assets:pull' or dat_action == 'assets:push' or dat_action == 'app:pull' or dat_action == 'app:push'
+
+- include_tasks: assets_pull.yml
+  when: dat_action == 'assets:pull' or dat_action == 'app:pull'
+
+- include_tasks: assets_push.yml
+  when: dat_action == 'assets:push' or dat_action == 'app:push'

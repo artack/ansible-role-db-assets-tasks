@@ -1,0 +1,24 @@
+---
+- set_fact:
+    dat_assets_local_temp_file: "{{ dat_assets_local_temp_dir }}/mysql_{{ timestamp }}.sql.gz"
+    dat_assets_remote_temp_file: "{{ dat_assets_remote_temp_dir }}/mysql_{{ timestamp }}.sql.gz"
+    dat_assets_controller_temp_file: "{{ dat_assets_controller_temp_dir }}/mysql_{{ timestamp }}.sql.gz"
+
+- name: DAT | ASSETS | Ensure the tmp directory on local exists
+  file:
+    path: "{{ dat_assets_local_temp_dir }}"
+    state: directory
+  when: inventory_hostname == 'dat_local'
+
+- name: DAT | ASSETS | Ensure the tmp directory on remote exists
+  file:
+    path: "{{ dat_assets_remote_temp_dir }}"
+    state: directory
+  when: inventory_hostname == 'dat_remote'
+
+- name: DAT | ASSETS | Ensure the tmp directory on controller exists
+  delegate_to: 127.0.0.1
+  file:
+    path: "{{ dat_assets_controller_temp_dir }}"
+    state: directory
+  when: inventory_hostname == 'dat_local'

@@ -1,11 +1,5 @@
 # Ansible DB & ASSETS Tasks
-
-Adds DB & ASSETS Tasks to any project like pull, push and synchronize. Based on Ansible. This project is heavily inspired by its [Ruby Version](https://github.com/sgruhier/capistrano-db-tasks).
-
-Currently only supported database is MySQL & MariaDB.
-
-## Status
-As per now only `db:pull` and `db:push` are supported. Assets task are to come soon!
+Adds DB & ASSETS Tasks to any project like pull, push and synchronize, based on Ansible. This project is heavily inspired by its [ruby version](https://github.com/sgruhier/capistrano-db-tasks).
 
 ## Install
 Words about ansible-galaxy, tbc...
@@ -27,6 +21,13 @@ dat_local   ansible_host=192.168.0.100              ansible_user=vagrant        
 ````yaml
 - name: DAT Example playbook
   hosts: dat # The group from the inventory file
+  vars:
+  
+    dat_db_name: xmas-web
+    dat_assets_dir: # paths must end with a directory separator (/)
+      -
+        local: /vagrant/files/xmas/
+        remote: ~/public_html/shared/files/xmas/
 
   vars_prompt:
     - name: dat_action
@@ -45,25 +46,24 @@ dat_db_local_clean: true
 # To remove the remote dump after using
 dat_db_remote_clean: true
 
-# To exclude tables from the dump
-dat_db_ignore_tables: [] // NOT yet supported
-
-# To exclude content (but still get the schema) from the dump
-dat_db_ignore_data_tables: [] // NOT yet supported
-
 # To specify the temp directory wher the dump is saved
-dat_db_dump_dir: /tmp/.db
+dat_db_temp_dir: /tmp/.db
 
 # To disallow any push to the remote (maybe productive) server
 dat_disallow_pushing: true // NOT yet supported
 
-# To specify the local & remote dirs to be synced - ATTENTION: Must be in the VERY SAME order!
-dat_assets_local_dir: []  // NOT yet supported
-dat_assets_remote_dir: []  // NOT yet supported
+# To specify the local & remote dirs to be synced - ATTENTION: Must end with a directory separator (/)
+dat_assets_dir: []
 ````
 
 ## Available Tasks
 ```
-db:pull      # Synchronize your local database using remote database data
-db:push      # Synchronize your remote database using local database data
+app:pull    # Synchronize your local database & assets using remote data
+app:push    # Synchronize your remote database & assets using local data
+
+assets:pull # Synchronize your local assets using remote assets data
+assets:push # Synchronize your remote assets using local assets data
+
+db:pull     # Synchronize your local database using remote database data
+db:push     # Synchronize your remote database using local database data
 ```

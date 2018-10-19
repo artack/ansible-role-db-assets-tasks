@@ -1,0 +1,7 @@
+---
+- name: TEST
+  hosts: localhost
+  gather_facts: false
+
+  roles:
+    - artack.db-assets-tasks

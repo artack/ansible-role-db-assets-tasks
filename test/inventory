@@ -1,0 +1,3 @@
+[dat]
+dat_remote      ansible_connection=local
+dat_local       ansible_connection=local
