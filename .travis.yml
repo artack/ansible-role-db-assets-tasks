@@ -1,0 +1,28 @@
+---
+language: python
+python: "2.7"
+
+env:
+  - ANSIBLE_VERSION: "2.4.6"
+  - ANSIBLE_VERSION: "2.5.10"
+  - ANSIBLE_VERSION: "2.6.6"
+  - ANSIBLE_VERSION: "2.7.0"
+  - ANSIBLE_VERSION: latest
+
+#before_install:
+#  - php$PHP_VERSION -v
+#  - php$PHP_VERSION -i
+
+install:
+  - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible; else pip install ansible==$ANSIBLE_VERSION; fi
+  - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible-lint; fi
+  - ansible --version
+#  - printf '[defaults]\nroles_path=../' > ansible.cfg
+#  - ln -s ./ansistrano-symfony-deploy ../cbrunnkvist.ansistrano-symfony-deploy
+
+script:
+  - ansible-playbook -i test/inventory test/playbook.yml --syntax-check
+  - ansible-playbook -i test/inventory test/playbook.yml -vvvv
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

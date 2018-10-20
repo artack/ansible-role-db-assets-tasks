@@ -1,11 +1,23 @@
 # Ansible DB & ASSETS Tasks
 Adds DB & ASSETS Tasks to any project like pull, push and synchronize, based on Ansible. This project is heavily inspired by its [ruby version](https://github.com/sgruhier/capistrano-db-tasks).
 
-## Install
-Words about ansible-galaxy, tbc...
+Installation
+------------
 
-## Update
-Words about ansible-galaxy, tbc...
+DB & ASSETS Tasks is an Ansible role distributed globally using [Ansible Galaxy](https://galaxy.ansible.com/). In order to install DB & ASSETS Tasks role you can use the following command.
+
+```
+$ ansible-galaxy install artack.db_assets_tasks
+```
+
+Update
+------
+
+If you want to update the role, you need to pass **--force** parameter when installing. Please, check the following command:
+
+```
+$ ansible-galaxy install --force artack.db_assets_tasks
+```
 
 ## Setup
 ### Inventory
