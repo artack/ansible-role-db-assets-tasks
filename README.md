@@ -1,3 +1,5 @@
+> **ATTENTION:** This repository is archived and therefore readonly.
+
 # Ansible DB & ASSETS Tasks
 Adds DB & ASSETS Tasks to any project like pull, push and synchronize, based on Ansible. This project is heavily inspired by its [ruby version](https://github.com/sgruhier/capistrano-db-tasks).
 
